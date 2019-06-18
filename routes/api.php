@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
+    Route::apiResource('tickets', 'API\TicketController');
+});
+
+Route::group(['prefix' => 'v1'], function () {
+    Route::get('test', function () {
+        return 'ok';
+    });
 });
